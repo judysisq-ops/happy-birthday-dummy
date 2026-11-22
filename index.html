@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sorpresa U2</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #fff;
+      font-family: Arial, sans-serif;
+      user-select: none;
+    }
+    #box {
+      width: 200px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    #box:hover {
+      transform: scale(1.1);
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 2em;
+      color: #e74c3c;
+      font-weight: bold;
+      display: none;
+    }
+    canvas {
+      position: fixed;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+
+  <img id="box" src="https://cdn-icons-png.flaticon.com/512/748/748113.png" alt="Caja sorpresa" title="Clica aquí para la sorpresa" />
+  <div id="message">Get ready for U2 in BCN!</div>
+  <canvas id="confetti"></canvas>
+
+  <script>
+    const box = document.getElementById('box');
+    const message = document.getElementById('message');
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+
+    let confettiActive = false;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Confetti particles
+    const confettiCount = 150;
+    const confetti = [];
+
+    function randomRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function Confetto() {
+      this.x = randomRange(0, canvas.width);
+      this.y = randomRange(-canvas.height, 0);
+      this.radius = randomRange(5, 10);
+      this.color = `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`;
+      this.speed = randomRange(2, 5);
+      this.tilt = randomRange(-10, 10);
+      this.tiltAngle = 0;
+      this.tiltSpeed = randomRange(0.05, 0.1);
+    }
+
+    Confetto.prototype.update = function() {
+      this.y += this.speed;
+      this.tiltAngle += this.tiltSpeed;
+      this.tilt = Math.sin(this.tiltAngle) * 10;
+
+      if (this.y > canvas.height) {
+        this.y = -10;
+        this.x = randomRange(0, canvas.width);
+      }
+    };
+
+    Confetto.prototype.draw = function() {
+      ctx.beginPath();
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = this.color;
+      ctx.moveTo(this.x + this.tilt + this.radius / 2, this.y);
+      ctx.lineTo(this.x + this.tilt, this.y + this.tilt + this.radius / 2);
+      ctx.stroke();
+    };
+
+    function createConfetti() {
+      for(let i = 0; i < confettiCount; i++) {
+        confetti.push(new Confetto());
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(c => {
+        c.update();
+        c.draw();
+      });
+      if (confettiActive) {
+        requestAnimationFrame(draw);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    box.addEventListener('click', () => {
+      if (confettiActive) return; // prevenimos múltiples clics
+      confettiActive = true;
+      message.style.display = 'block';
+      createConfetti();
+      draw();
+    });
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+
+</body>
+</html>
