@@ -73,41 +73,20 @@
     z-index: 9999;\
   \}\
 \
-  #audioControl \{\
-    margin-top: 30px;\
-    cursor: pointer;\
-    font-family: Arial, sans-serif;\
-    font-weight: normal;\
-    font-size: 1em;\
-    background-color: #e74c3c;\
-    color: white;\
-    border: none;\
-    padding: 10px 20px;\
-    border-radius: 8px;\
-  \}\
-\
 </style>\
 </head>\
 <body>\
 \
 <div id="envelope" title="Haz clic para abrir la sorpresa"></div>\
 <div id="message">Get ready for U2 in BCN!</div>\
-<button id="audioControl" style="display:none;">\uc0\u9654 \u65039  Play music</button>\
 \
 <canvas id="confetti"></canvas>\
-\
-<audio id="audio" preload="auto" loop>\
-  <!-- Ejemplo de canci\'f3n con licencia, puedes cambiar la URL por un archivo propio -->\
-  <source src="https://cdn.pixabay.com/download/audio/2023/04/27/audio_9d9bab98d0.mp3?filename=upbeat-rock-26862.mp3" type="audio/mpeg" />\
-</audio>\
 \
 <script>\
 const envelope = document.getElementById('envelope');\
 const message = document.getElementById('message');\
 const canvas = document.getElementById('confetti');\
 const ctx = canvas.getContext('2d');\
-const audio = document.getElementById('audio');\
-const audioControl = document.getElementById('audioControl');\
 \
 canvas.width = window.innerWidth;\
 canvas.height = window.innerHeight;\
@@ -181,18 +160,7 @@ envelope.addEventListener('click', () => \{\
     confettiActive = true;\
     createConfetti();\
     draw();\
-    audioControl.style.display = 'inline-block';\
   \}, 700);\
-\});\
-\
-audioControl.addEventListener('click', () => \{\
-  if (audio.paused) \{\
-    audio.play();\
-    audioControl.textContent = '\uc0\u9208 \u65039  Pause music';\
-  \} else \{\
-    audio.pause();\
-    audioControl.textContent = '\uc0\u9654 \u65039  Play music';\
-  \}\
 \});\
 \
 window.addEventListener('resize', () => \{\
