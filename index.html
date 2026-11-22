@@ -1,174 +1,260 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2870
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fiesta Gatuna Spider-Man 🕷️🎉</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
-\f0\fs24 \cf0 <!DOCTYPE html>\
-<html lang="en">\
-<head>\
-<meta charset="UTF-8" />\
-<meta name="viewport" content="width=device-width, initial-scale=1" />\
-<title>Sorpresa U2 - Sobre</title>\
-<style>\
-  @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap'); /* Fuente comic estilo Marvel */\
-\
-  body \{\
-    display: flex;\
-    flex-direction: column;\
-    justify-content: center;\
-    align-items: center;\
-    height: 100vh;\
-    margin: 0;\
-    background-color: #fff9f0;\
-    font-family: 'Bangers', cursive;\
-    overflow: hidden;\
-    user-select: none;\
-  \}\
-\
-  #envelope \{\
-    width: 250px;\
-    height: 180px;\
-    background: url('https://cdn-icons-png.flaticon.com/512/3614/3614424.png') no-repeat center/contain;\
-    cursor: pointer;\
-    position: relative;\
-    transition: transform 0.6s ease;\
-  \}\
-\
-  #envelope.open \{\
-    background: url('https://cdn-icons-png.flaticon.com/512/3614/3614427.png') no-repeat center/contain;\
-    transform: scale(1.1);\
-  \}\
-\
-  #message \{\
-    margin-top: 40px;\
-    font-size: 3em;\
-    color: #e74c3c;\
-    font-weight: bold;\
-    display: none;\
-    text-align: center;\
-    animation: textScale 3s ease-in-out forwards;\
-    max-width: 90vw;\
-  \}\
-\
-  @keyframes textScale \{\
-    0% \{\
-      opacity: 0;\
-      transform: scale(0.5);\
-    \}\
-    100% \{\
-      opacity: 1;\
-      transform: scale(1);\
-    \}\
-  \}\
-\
-  canvas \{\
-    position: fixed;\
-    pointer-events: none;\
-    top: 0;\
-    left: 0;\
-    width: 100%;\
-    height: 100%;\
-    z-index: 9999;\
-  \}\
-\
-</style>\
-</head>\
-<body>\
-\
-<div id="envelope" title="Haz clic para abrir la sorpresa"></div>\
-<div id="message">Get ready for U2 in BCN!</div>\
-\
-<canvas id="confetti"></canvas>\
-\
-<script>\
-const envelope = document.getElementById('envelope');\
-const message = document.getElementById('message');\
-const canvas = document.getElementById('confetti');\
-const ctx = canvas.getContext('2d');\
-\
-canvas.width = window.innerWidth;\
-canvas.height = window.innerHeight;\
-\
-let confettiActive = false;\
-const confettiCount = 150;\
-const confetti = [];\
-\
-function randomRange(min, max) \{\
-  return Math.random() * (max - min) + min;\
-\}\
-\
-function Confetto() \{\
-  this.x = randomRange(0, canvas.width);\
-  this.y = randomRange(-canvas.height, 0);\
-  this.radius = randomRange(5, 10);\
-  this.color = `hsl($\{Math.floor(Math.random() * 360)\}, 70%, 60%)`;\
-  this.speed = randomRange(2, 5);\
-  this.tilt = randomRange(-10, 10);\
-  this.tiltAngle = 0;\
-  this.tiltSpeed = randomRange(0.05, 0.1);\
-\}\
-\
-Confetto.prototype.update = function() \{\
-  this.y += this.speed;\
-  this.tiltAngle += this.tiltSpeed;\
-  this.tilt = Math.sin(this.tiltAngle) * 10;\
-\
-  if (this.y > canvas.height) \{\
-    this.y = -10;\
-    this.x = randomRange(0, canvas.width);\
-  \}\
-\};\
-\
-Confetto.prototype.draw = function() \{\
-  ctx.beginPath();\
-  ctx.lineWidth = 5;\
-  ctx.strokeStyle = this.color;\
-  ctx.moveTo(this.x + this.tilt + this.radius / 2, this.y);\
-  ctx.lineTo(this.x + this.tilt, this.y + this.tilt + this.radius / 2);\
-  ctx.stroke();\
-\};\
-\
-function createConfetti() \{\
-  for(let i = 0; i < confettiCount; i++) \{\
-    confetti.push(new Confetto());\
-  \}\
-\}\
-\
-function draw() \{\
-  ctx.clearRect(0, 0, canvas.width, canvas.height);\
-  confetti.forEach(c => \{\
-    c.update();\
-    c.draw();\
-  \});\
-  if (confettiActive) \{\
-    requestAnimationFrame(draw);\
-  \} else \{\
-    ctx.clearRect(0, 0, canvas.width, canvas.height);\
-  \}\
-\}\
-\
-let opened = false;\
-envelope.addEventListener('click', () => \{\
-  if (opened) return;\
-  opened = true;\
-  envelope.classList.add('open');\
-\
-  setTimeout(() => \{\
-    message.style.display = 'block';\
-    confettiActive = true;\
-    createConfetti();\
-    draw();\
-  \}, 700);\
-\});\
-\
-window.addEventListener('resize', () => \{\
-  canvas.width = window.innerWidth;\
-  canvas.height = window.innerHeight;\
-\});\
-</script>\
-\
-</body>\
-</html>\
-}
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #c8102e, #0033a0);
+    font-family: 'Luckiest Guy', cursive;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    user-select: none;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+  }
+
+  h1, #message {
+    font-weight: normal;
+    text-shadow:
+      3px 3px 0 #000000,
+      6px 6px 0 #d8342a;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: 3rem;
+    animation: bounceZoom 2.5s ease forwards;
+  }
+
+  #message {
+    font-size: 3.5rem;
+    color: #ffd600;
+    text-shadow:
+      3px 3px 0 #000000,
+      6px 6px 0 #b52927;
+    display: none;
+    animation: bounceZoom 2.5s ease forwards;
+  }
+
+  #surpriseBtn {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    border: 3px solid #ffd600;
+    border-radius: 12px;
+    background: #c8102e;
+    color: #ffd600;
+    cursor: pointer;
+    margin-bottom: 30px;
+    box-shadow: 0 0 15px #ffd600;
+    transition: all 0.3s ease;
+  }
+  #surpriseBtn:hover {
+    background: #ffd600;
+    color: #c8102e;
+    box-shadow: 0 0 25px #c8102e;
+    border-color: #c8102e;
+  }
+
+  .cat-gifs {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 400px;
+    display: none;
+  }
+
+  .cat-gif {
+    position: absolute;
+    width: 150px;
+    animation-name: danceMove;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+  }
+
+  .cat-gif:nth-child(odd) {
+    animation-direction: normal;
+  }
+  .cat-gif:nth-child(even) {
+    animation-direction: reverse;
+  }
+
+  @keyframes danceMove {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(10deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
+
+  /* Posiciones gifs */
+  .cat-gif:nth-child(1) { top: 10px; left: 5%; animation-delay: 0s;}
+  .cat-gif:nth-child(2) { top: 80px; left: 30%; animation-delay: 0.3s;}
+  .cat-gif:nth-child(3) { top: 140px; left: 55%; animation-delay: 0.6s;}
+  .cat-gif:nth-child(4) { top: 40px; left: 75%; animation-delay: 0.9s;}
+  .cat-gif:nth-child(5) { top: 120px; left: 90%; animation-delay: 1.2s;}
+
+  canvas {
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+  }
+
+  /* Globos */
+  .balloon {
+    position: fixed;
+    bottom: -150px;
+    width: 50px;
+    height: 70px;
+    background: red;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    opacity: 0.8;
+    animation: floatUp linear infinite;
+  }
+  /* Variaciones de color */
+  .balloon.blue { background: #0033a0; }
+  .balloon.yellow { background: #ffd600; }
+  .balloon.white { background: #eee; }
+  .balloon.purple { background: #800080; }
+
+  /* Animación de subir y balanceo */
+  @keyframes floatUp {
+    0% {
+      transform: translateY(0) translateX(0) rotate(0deg);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translateY(-300vh) translateX(15px) rotate(10deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-600vh) translateX(-15px) rotate(0deg);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1 id="introText">Haz clic en el botón para la sorpresa</h1>
+<button id="surpriseBtn">Click here</button>
+
+<div id="message">¡Sorpresa! Te vas a Barcelona a ver a U2 🎸🎤</div>
+
+<div class="cat-gifs">
+  <img class="cat-gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Gato bailando 1" />
+  <img class="cat-gif" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Gato bailando 2" />
+  <img class="cat-gif" src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif" alt="Gato bailando 3" />
+  <img class="cat-gif" src="https://media.giphy.com/media/v6aOjy0Qo1fIA/giphy.gif" alt="Gato bailando 4" />
+  <img class="cat-gif" src="https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif" alt="Gato bailando 5" />
+</div>
+
+<canvas id="confetti"></canvas>
+
+<!-- Globos -->
+<div class="balloon red" style="left: 10%; animation-duration: 15s; animation-delay: 0s;"></div>
+<div class="balloon blue" style="left: 25%; animation-duration: 12s; animation-delay: 2s;"></div>
+<div class="balloon yellow" style="left: 40%; animation-duration: 17s; animation-delay: 4s;"></div>
+<div class="balloon purple" style="left: 60%; animation-duration: 14s; animation-delay: 1s;"></div>
+<div class="balloon white" style="left: 80%; animation-duration: 16s; animation-delay: 3s;"></div>
+
+<script>
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  const surpriseBtn = document.getElementById('surpriseBtn');
+  const introText = document.getElementById('introText');
+  const message = document.getElementById('message');
+  const catGifs = document.querySelector('.cat-gifs');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let confettiActive = false;
+  const confettiCount = 200;
+  const confetti = [];
+
+  function randomRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  function Confetto() {
+    this.x = randomRange(0, canvas.width);
+    this.y = randomRange(-canvas.height, 0);
+    this.radius = randomRange(5, 10);
+    this.color = `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`;
+    this.speed = randomRange(2, 5);
+    this.tilt = randomRange(-10, 10);
+    this.tiltAngle = 0;
+    this.tiltSpeed = randomRange(0.05, 0.1);
+  }
+
+  Confetto.prototype.update = function() {
+    this.y += this.speed;
+    this.tiltAngle += this.tiltSpeed;
+    this.tilt = Math.sin(this.tiltAngle) * 10;
+
+    if (this.y > canvas.height) {
+      this.y = -10;
+      this.x = randomRange(0, canvas.width);
+    }
+  };
+
+  Confetto.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = this.color;
+    ctx.moveTo(this.x + this.tilt + this.radius / 2, this.y);
+    ctx.lineTo(this.x + this.tilt, this.y + this.tilt + this.radius / 2);
+    ctx.stroke();
+  };
+
+  function createConfetti() {
+    for(let i = 0; i < confettiCount; i++) {
+      confetti.push(new Confetto());
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confetti.forEach(c => {
+      c.update();
+      c.draw();
+    });
+    if (confettiActive) {
+      requestAnimationFrame(draw);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  surpriseBtn.addEventListener('click', () => {
+    introText.style.display = 'none'; // hide intro text
+    surpriseBtn.style.display = 'none';
+    message.style.display = 'block';
+    catGifs.style.display = 'block';
+    confettiActive = true;
+    createConfetti();
+    draw();
+  });
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+
+</body>
+</html>
