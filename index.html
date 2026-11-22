@@ -7,7 +7,7 @@
   <meta name="Generator" content="Cocoa HTML Writer">
   <meta name="CocoaVersion" content="2685.7">
   <style type="text/css">
-    body {background-color: #fff8ec}
+    body {background-color: #fff7e7}
     p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Arial; -webkit-text-stroke: #000000}
     p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Arial; -webkit-text-stroke: #000000; min-height: 14.0px}
     span.s1 {font-kerning: none}
@@ -82,41 +82,20 @@
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>z-index: 9999;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#audioControl {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin-top: 30px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>cursor: pointer;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-family: Arial, sans-serif;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-weight: normal;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-size: 1em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background-color: #e74c3c;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>color: white;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border: none;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>padding: 10px 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-radius: 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
 <p class="p1"><span class="s1">&lt;/style&gt;</span></p>
 <p class="p1"><span class="s1">&lt;/head&gt;</span></p>
 <p class="p1"><span class="s1">&lt;body&gt;</span></p>
 <p class="p2"><span class="s1"></span><br></p>
 <p class="p1"><span class="s1">&lt;div id="envelope" title="Haz clic para abrir la sorpresa"&gt;&lt;/div&gt;</span></p>
 <p class="p1"><span class="s1">&lt;div id="message"&gt;Get ready for U2 in BCN!&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;button id="audioControl" style="display:none;"&gt;▶️ Play music&lt;/button&gt;</span></p>
 <p class="p2"><span class="s1"></span><br></p>
 <p class="p1"><span class="s1">&lt;canvas id="confetti"&gt;&lt;/canvas&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;audio id="audio" preload="auto" loop&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- Ejemplo de canción con licencia, puedes cambiar la URL por un archivo propio --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;source src="https://cdn.pixabay.com/download/audio/2023/04/27/audio_9d9bab98d0.mp3?filename=upbeat-rock-26862.mp3" type="audio/mpeg" /&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/audio&gt;</span></p>
 <p class="p2"><span class="s1"></span><br></p>
 <p class="p1"><span class="s1">&lt;script&gt;</span></p>
 <p class="p1"><span class="s1">const envelope = document.getElementById('envelope');</span></p>
 <p class="p1"><span class="s1">const message = document.getElementById('message');</span></p>
 <p class="p1"><span class="s1">const canvas = document.getElementById('confetti');</span></p>
 <p class="p1"><span class="s1">const ctx = canvas.getContext('2d');</span></p>
-<p class="p1"><span class="s1">const audio = document.getElementById('audio');</span></p>
-<p class="p1"><span class="s1">const audioControl = document.getElementById('audioControl');</span></p>
 <p class="p2"><span class="s1"></span><br></p>
 <p class="p1"><span class="s1">canvas.width = window.innerWidth;</span></p>
 <p class="p1"><span class="s1">canvas.height = window.innerHeight;</span></p>
@@ -190,18 +169,7 @@
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>confettiActive = true;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>createConfetti();</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>draw();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>audioControl.style.display = 'inline-block';</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}, 700);</span></p>
-<p class="p1"><span class="s1">});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">audioControl.addEventListener('click', () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (audio.paused) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>audio.play();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>audioControl.textContent = '⏸️ Pause music';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>} else {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>audio.pause();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>audioControl.textContent = '▶️ Play music';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
 <p class="p1"><span class="s1">});</span></p>
 <p class="p2"><span class="s1"></span><br></p>
 <p class="p1"><span class="s1">window.addEventListener('resize', () =&gt; {</span></p>
