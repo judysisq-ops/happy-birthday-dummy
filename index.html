@@ -1,183 +1,216 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sorpresa U2 Mejorada</title>
-<style>
-  body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #fff9f0;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-    user-select: none;
-  }
-  #box {
-    width: 150px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    position: relative;
-  }
-  #box.exploding {
-    animation: explode 0.6s forwards;
-  }
-  @keyframes explode {
-    0% { transform: scale(1) rotate(0deg); opacity: 1; }
-    50% { transform: scale(1.5) rotate(45deg); opacity: 0.7; }
-    100% { transform: scale(0) rotate(360deg); opacity: 0; }
-  }
-  #message {
-    margin-top: 20px;
-    font-size: 2em;
-    color: #e74c3c;
-    font-weight: bold;
-    display: none;
-    animation: moveAndScale 3s ease-in-out infinite alternate;
-    position: relative;
-  }
-  @keyframes moveAndScale {
-    0% { transform: translateX(0) scale(1); }
-    50% { transform: translateX(200px) scale(1.5); }
-    100% { transform: translateX(0) scale(1); }
-  }
-  canvas {
-    position: fixed;
-    pointer-events: none;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-  }
-  #kittens {
-    margin-top: 30px;
-    display: flex;
-    gap: 15px;
-    display: none;
-  }
-  .kitten {
-    width: 80px;
-    animation: dance 1s ease-in-out infinite alternate;
-  }
-  .kitten:nth-child(odd) {
-    animation-delay: 0s;
-  }
-  .kitten:nth-child(even) {
-    animation-delay: 0.5s;
-  }
-  @keyframes dance {
-    0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-15px) rotate(10deg); }
-    100% { transform: translateY(0) rotate(0deg); }
-  }
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    body {background-color: #fff8ec}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Arial; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Arial; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
 </head>
 <body>
-
-<img id="box" src="https://cdn-icons-png.flaticon.com/512/748/748113.png" alt="Caja sorpresa" title="Clica aquí para la sorpresa" />
-<div id="message">Get ready for U2 in BCN!</div>
-<div id="kittens">
-  <img class="kitten" src="https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg" alt="Kitten 1" />
-  <img class="kitten" src="https://cdn2.thecatapi.com/images/MTY3ODIyOQ.jpg" alt="Kitten 2" />
-  <img class="kitten" src="https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg" alt="Kitten 3" />
-</div>
-<canvas id="confetti"></canvas>
-
-<script>
-const box = document.getElementById('box');
-const message = document.getElementById('message');
-const kittens = document.getElementById('kittens');
-const canvas = document.getElementById('confetti');
-const ctx = canvas.getContext('2d');
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let confettiActive = false;
-const confettiCount = 150;
-const confetti = [];
-
-function randomRange(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-function Confetto() {
-  this.x = randomRange(0, canvas.width);
-  this.y = randomRange(-canvas.height, 0);
-  this.radius = randomRange(5, 10);
-  this.color = `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`;
-  this.speed = randomRange(2, 5);
-  this.tilt = randomRange(-10, 10);
-  this.tiltAngle = 0;
-  this.tiltSpeed = randomRange(0.05, 0.1);
-}
-
-Confetto.prototype.update = function() {
-  this.y += this.speed;
-  this.tiltAngle += this.tiltSpeed;
-  this.tilt = Math.sin(this.tiltAngle) * 10;
-
-  if (this.y > canvas.height) {
-    this.y = -10;
-    this.x = randomRange(0, canvas.width);
-  }
-};
-
-Confetto.prototype.draw = function() {
-  ctx.beginPath();
-  ctx.lineWidth = 5;
-  ctx.strokeStyle = this.color;
-  ctx.moveTo(this.x + this.tilt + this.radius / 2, this.y);
-  ctx.lineTo(this.x + this.tilt, this.y + this.tilt + this.radius / 2);
-  ctx.stroke();
-};
-
-function createConfetti() {
-  for(let i = 0; i < confettiCount; i++) {
-    confetti.push(new Confetto());
-  }
-}
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  confetti.forEach(c => {
-    c.update();
-    c.draw();
-  });
-  if (confettiActive) {
-    requestAnimationFrame(draw);
-  } else {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-}
-
-box.addEventListener('click', () => {
-  if (confettiActive) return;
-  confettiActive = true;
-
-  // Animar caja explotando
-  box.classList.add('exploding');
-
-  // Mostrar mensaje animado y gatitos tras la explosión
-  setTimeout(() => {
-    box.style.display = 'none';
-    message.style.display = 'block';
-    kittens.style.display = 'flex';
-    createConfetti();
-    draw();
-  }, 600);
-});
-
-window.addEventListener('resize', () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-</script>
-
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta charset="UTF-8" /&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;</span></p>
+<p class="p1"><span class="s1">&lt;title&gt;Sorpresa U2 - Sobre&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>@import url('https://fonts.googleapis.com/css2?family=Bangers&amp;display=swap'); /* Fuente comic estilo Marvel */</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>body {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>display: flex;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>flex-direction: column;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>justify-content: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>align-items: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>height: 100vh;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background-color: #fff9f0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-family: 'Bangers', cursive;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>overflow: hidden;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>user-select: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#envelope {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>width: 250px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>height: 180px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: url('https://cdn-icons-png.flaticon.com/512/3614/3614424.png') no-repeat center/contain;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>cursor: pointer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>position: relative;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>transition: transform 0.6s ease;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#envelope.open {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: url('https://cdn-icons-png.flaticon.com/512/3614/3614427.png') no-repeat center/contain;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>transform: scale(1.1);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#message {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin-top: 40px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-size: 3em;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>color: #e74c3c;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-weight: bold;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>display: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>text-align: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>animation: textScale 3s ease-in-out forwards;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>max-width: 90vw;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>@keyframes textScale {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>0% {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>opacity: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>transform: scale(0.5);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>100% {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>opacity: 1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>transform: scale(1);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>canvas {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>pointer-events: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>top: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>left: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>z-index: 9999;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#audioControl {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin-top: 30px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>cursor: pointer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-family: Arial, sans-serif;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-weight: normal;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-size: 1em;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background-color: #e74c3c;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>color: white;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>padding: 10px 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-radius: 8px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div id="envelope" title="Haz clic para abrir la sorpresa"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="message"&gt;Get ready for U2 in BCN!&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;button id="audioControl" style="display:none;"&gt;▶️ Play music&lt;/button&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;canvas id="confetti"&gt;&lt;/canvas&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;audio id="audio" preload="auto" loop&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- Ejemplo de canción con licencia, puedes cambiar la URL por un archivo propio --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;source src="https://cdn.pixabay.com/download/audio/2023/04/27/audio_9d9bab98d0.mp3?filename=upbeat-rock-26862.mp3" type="audio/mpeg" /&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/audio&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p1"><span class="s1">const envelope = document.getElementById('envelope');</span></p>
+<p class="p1"><span class="s1">const message = document.getElementById('message');</span></p>
+<p class="p1"><span class="s1">const canvas = document.getElementById('confetti');</span></p>
+<p class="p1"><span class="s1">const ctx = canvas.getContext('2d');</span></p>
+<p class="p1"><span class="s1">const audio = document.getElementById('audio');</span></p>
+<p class="p1"><span class="s1">const audioControl = document.getElementById('audioControl');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">canvas.width = window.innerWidth;</span></p>
+<p class="p1"><span class="s1">canvas.height = window.innerHeight;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let confettiActive = false;</span></p>
+<p class="p1"><span class="s1">const confettiCount = 150;</span></p>
+<p class="p1"><span class="s1">const confetti = [];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function randomRange(min, max) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return Math.random() * (max - min) + min;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function Confetto() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.x = randomRange(0, canvas.width);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.y = randomRange(-canvas.height, 0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.radius = randomRange(5, 10);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.color = `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.speed = randomRange(2, 5);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.tilt = randomRange(-10, 10);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.tiltAngle = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.tiltSpeed = randomRange(0.05, 0.1);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">Confetto.prototype.update = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.y += this.speed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.tiltAngle += this.tiltSpeed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>this.tilt = Math.sin(this.tiltAngle) * 10;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (this.y &gt; canvas.height) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>this.y = -10;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>this.x = randomRange(0, canvas.width);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1">};</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">Confetto.prototype.draw = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>ctx.beginPath();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>ctx.lineWidth = 5;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>ctx.strokeStyle = this.color;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>ctx.moveTo(this.x + this.tilt + this.radius / 2, this.y);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>ctx.lineTo(this.x + this.tilt, this.y + this.tilt + this.radius / 2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>ctx.stroke();</span></p>
+<p class="p1"><span class="s1">};</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function createConfetti() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>for(let i = 0; i &lt; confettiCount; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>confetti.push(new Confetto());</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function draw() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>ctx.clearRect(0, 0, canvas.width, canvas.height);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>confetti.forEach(c =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>c.update();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>c.draw();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (confettiActive) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>requestAnimationFrame(draw);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>ctx.clearRect(0, 0, canvas.width, canvas.height);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let opened = false;</span></p>
+<p class="p1"><span class="s1">envelope.addEventListener('click', () =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (opened) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>opened = true;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>envelope.classList.add('open');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>setTimeout(() =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>message.style.display = 'block';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>confettiActive = true;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>createConfetti();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>draw();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>audioControl.style.display = 'inline-block';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}, 700);</span></p>
+<p class="p1"><span class="s1">});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">audioControl.addEventListener('click', () =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (audio.paused) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>audio.play();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>audioControl.textContent = '⏸️ Pause music';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>audio.pause();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>audioControl.textContent = '▶️ Play music';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1">});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">window.addEventListener('resize', () =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>canvas.width = window.innerWidth;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>canvas.height = window.innerHeight;</span></p>
+<p class="p1"><span class="s1">});</span></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
 </body>
 </html>
